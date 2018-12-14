@@ -1,6 +1,6 @@
 {
-  "name": "react-native-timeline-feed",
-  "version": "0.0.1",
+  "name": "react-native-timeline-feed-oeuvre",
+  "version": "0.0.12",
   "description": "Timeline component for React Native",
   "main": "lib/index.js",
   "scripts": {
