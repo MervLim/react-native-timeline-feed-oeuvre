@@ -4,15 +4,14 @@ import * as React from "react";
 import {
   StyleSheet,
   FlatList,
-  Image,
   View,
   Text,
   TouchableOpacity
 } from "react-native";
-
+import { isEmpty } from 'lodash';
 import type {
   ViewStyleProp,
-  TextStyleProp
+    TextStyleProp
 } from "react-native/Libraries/StyleSheet/StyleSheet";
 
 const defaultCircleSize = 16;
@@ -34,29 +33,29 @@ export type Props = {
   rowContainerStyle?: ViewStyleProp,
   lastCircleContainerStyle?: ViewStyleProp,
   showTime?: boolean,
-  renderTime?: FlatListItemType => React.Element<any>,
-  timeContainerStyle?: ViewStyleProp,
-  timeStyle?: TextStyleProp,
-  renderEvent?: FlatListItemType => React.Element<any>,
-  lineWidth?: number,
-  renderFullLine?: boolean,
-  endWithCircle?: boolean,
-  lineColor?: string,
-  onEventPress?: (rowData: any) => void,
-  detailContainerStyle?: ViewStyleProp,
-  renderDetail?: FlatListItemType => React.Element<any>,
-  titleStyle?: TextStyleProp,
-  descriptionStyle?: TextStyleProp,
-  renderCircle?: FlatListItemType => React.Element<any>,
-  circleSize?: number,
-  circleColor?: string,
-  innerCircleType?: "icon" | "dot",
-  iconStyle?: ViewStyleProp,
-  icon?: any,
-  dotColor?: string,
-  circleStyle?: ViewStyleProp,
-  separator?: boolean,
-  separatorStyle?: ViewStyleProp
+  renderTime?: FlatListItemType => React.Element < any >,
+    timeContainerStyle ?: ViewStyleProp,
+    timeStyle ?: TextStyleProp,
+    renderEvent ?: FlatListItemType => React.Element < any >,
+    lineWidth ?: number,
+    renderFullLine ?: boolean,
+    endWithCircle ?: boolean,
+    lineColor ?: string,
+    onEventPress ?: (rowData: any) => void,
+    detailContainerStyle ?: ViewStyleProp,
+    renderDetail ?: FlatListItemType => React.Element < any >,
+    titleStyle ?: TextStyleProp,
+    descriptionStyle ?: TextStyleProp,
+    renderCircle ?: FlatListItemType => React.Element < any >,
+    circleSize ?: number,
+    circleColor ?: string,
+    innerCircleType ?: "icon" | "dot",
+    iconStyle ?: ViewStyleProp,
+    icon ?: any,
+    dotColor ?: string,
+    circleStyle ?: ViewStyleProp,
+    separator ?: boolean,
+    separatorStyle ?: ViewStyleProp
 };
 
 type FlatListItemType = {
@@ -136,12 +135,12 @@ class Timeline extends React.Component<Props, State> {
               {this.renderCircle({ item, index })}
             </View>
           ) : (
-            <View style={[styles.rowContainer, rowContainerStyle]}>
-              {this.renderEvent({ item, index })}
-              {this.renderTime({ item, index })}
-              {this.renderCircle({ item, index })}
-            </View>
-          );
+              <View style={[styles.rowContainer, rowContainerStyle]}>
+                {this.renderEvent({ item, index })}
+                {this.renderTime({ item, index })}
+                {this.renderCircle({ item, index })}
+              </View>
+            );
         break;
     }
 
@@ -261,19 +260,19 @@ class Timeline extends React.Component<Props, State> {
         opStyle =
           index % 2 == 0
             ? {
-                borderColor: borderColor,
-                borderLeftWidth: lineWidth,
-                borderRightWidth: 0,
-                marginLeft: 20,
-                paddingLeft: 20
-              }
+              borderColor: borderColor,
+              borderLeftWidth: lineWidth,
+              borderRightWidth: 0,
+              marginLeft: 20,
+              paddingLeft: 20
+            }
             : {
-                borderColor: borderColor,
-                borderLeftWidth: 0,
-                borderRightWidth: lineWidth,
-                marginRight: 20,
-                paddingRight: 20
-              };
+              borderColor: borderColor,
+              borderLeftWidth: 0,
+              borderRightWidth: lineWidth,
+              marginRight: 20,
+              paddingRight: 20
+            };
         break;
     }
 
@@ -318,8 +317,8 @@ class Timeline extends React.Component<Props, State> {
         </Text>
       </View>
     ) : (
-      <Text style={[styles.title, titleStyle]}>{item.title}</Text>
-    );
+        <Text style={[styles.title, titleStyle]}>{item.title}</Text>
+      );
 
     return <View style={styles.container}>{title}</View>;
   };
@@ -349,6 +348,14 @@ class Timeline extends React.Component<Props, State> {
           backgroundColor: circleColor,
           left: x - circleSize / 2 + (lineWidth - 1) / 2
         };
+        localIconCircleStyle = {
+          width: 'auto',
+          height: 'auto',
+          borderRadius: circleSize / 2,
+          backgroundColor: 'transparent',
+          // left: x - circleSize / 2 + (lineWidth - 1) / 2
+          left: 9.5,
+        };
         break;
       case "single-column-right":
         localCircleStyle = {
@@ -369,11 +376,8 @@ class Timeline extends React.Component<Props, State> {
         };
         break;
     }
-
     const {
       innerCircleType = defaultInnerCircleType,
-      iconStyle,
-      icon,
       dotColor = item.dotColor || defaultDotColor,
       circleStyle
     } = this.props;
@@ -381,13 +385,8 @@ class Timeline extends React.Component<Props, State> {
     let innerCircleElement = null;
     switch (innerCircleType) {
       case "icon":
-        let iconSource = item.icon || icon;
-        let localIconStyle = {
-          height: circleSize,
-          width: circleSize
-        };
         innerCircleElement = (
-          <Image source={iconSource} style={[localIconStyle, iconStyle]} />
+          item.icon
         );
         break;
       case "dot":
@@ -401,9 +400,15 @@ class Timeline extends React.Component<Props, State> {
         break;
     }
     return (
-      <View style={[styles.circle, localCircleStyle, circleStyle]}>
-        {innerCircleElement}
-      </View>
+      <React.Fragment>
+        {!isEmpty(item.icon) ? (
+          <View style={[styles.circle, localIconCircleStyle, circleStyle]}>
+            {innerCircleElement}
+          </View>
+        ) : (
+            <View style={[styles.circle, localCircleStyle, circleStyle]} />
+          )}
+      </React.Fragment>
     );
   }
 
@@ -439,13 +444,13 @@ const styles = StyleSheet.create({
     color: defaultTimeTextColor
   },
   circle: {
-    width: 16,
-    height: 16,
+    width: 'auto',
+    height: 'auto',
     borderRadius: 10,
     position: "absolute",
     left: -8,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   dot: {
     width: 8,

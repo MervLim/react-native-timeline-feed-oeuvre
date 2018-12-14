@@ -1,6 +1,6 @@
 {
   "name": "react-native-timeline-feed",
-  "version": "0.1.3",
+  "version": "0.0.1",
   "description": "Timeline component for React Native",
   "main": "lib/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Johan-dutoit/react-native-timeline-feed.git"
+    "url": "git+https://github.com/MervLim/react-native-timeline-feed-oeuvre.git"
   },
   "keywords": [
     "react-native",
@@ -28,10 +28,10 @@
     "flatlist",
     "flat list"
   ],
-  "author": "Johan du Toit (https://github.com/Johan-dutoit)",
+  "author": "Mervyn Lim (https://github.com/MervLim)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Johan-dutoit/react-native-timeline-feed/issues"
+    "url": "https://github.com/MervLim/react-native-timeline-feed-oeuvre/issues"
   },
   "homepage": "https://github.com/Johan-dutoit/react-native-timeline-feed",
   "peerDependencies": {
@@ -50,5 +50,9 @@
     "prettier": "1.14.3",
     "react": "16.5.0",
     "react-native": "0.57.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11",
+    "react-native-vector-icons": "^6.1.0"
   }
 }
